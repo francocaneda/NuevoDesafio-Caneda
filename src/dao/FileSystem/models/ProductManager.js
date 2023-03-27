@@ -2,9 +2,6 @@ import fs from "fs";
 
 
 
-
-
-
 export class Producto {
     constructor(title, description, price, thumbnail, code, stock, status, category) {
         this.title = title;
@@ -62,7 +59,7 @@ export class ProductManager {
             if (tituloAuxiliar)
             {
                 
-                console.log(`El producto "${tituloAuxiliar.title}" ya está en la lista`);
+                console.log(`El producto "${tituloAuxiliar.title}" ya está en la lista.`);
             }
             else 
             {
