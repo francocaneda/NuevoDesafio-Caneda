@@ -31,17 +31,17 @@ async function renderProducts() {
         products.payload.forEach(product => {
             document.getElementById("productsCard").innerHTML +=
                 `
-                    <div class="card cardProduct">
+                    <div class="card cardProductFinal">
                     <img class="card-img-top imagenCardProducts" src="${product.thumbnail}" alt="Card image cap">
-                    <div class="card-body">
+                    <div class="card-body contenedorDatos">
                         <h5 class="card-title">${product.title}</h5>
                         <p class="card-text">${product.description} </p>
                         <p class="card-text">Precio: ${product.price} </p>       
                         <p class="card-text">Stock: ${product.stock} </p>   
                         <p class="card-text">Code: ${product.code} </p>   
-                        <div class="contenedorBotonesProductCards">                                            
-                            <a id="botonProductoEliminar${product._id}" class="botonesProductCards btn btn-primary">Eliminar</a>
-                            <a id="botonProductoAddCart${product._id}" class="botonesProductCards btn btn-primary">Agregar al Carrito</a>
+                        <div class="contenedorButtonsProductCards">                                            
+                            <a id="botonProductoEliminar${product._id}" class="botonesProductCards btn btn-danger">Eliminar</a>
+                            <a id="botonProductoAddCart${product._id}" class="botonesProductCards btn btn-danger">Agregar al Carrito</a>
                         </div>
                     </div>
                     `

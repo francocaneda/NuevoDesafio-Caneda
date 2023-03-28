@@ -33,7 +33,7 @@ botonRegistro.addEventListener("click",async(e)=>{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                    }, //Sin estas lineas no agrega
+                    }, 
                     body: JSON.stringify(newUser),
                 });
                 mensajeRegistro.innerText = "Usuario creado correctamente"
