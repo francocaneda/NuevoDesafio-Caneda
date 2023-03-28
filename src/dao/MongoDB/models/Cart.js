@@ -87,15 +87,28 @@ export class cartManagerMongoDB extends ManagerMongoDB {
 
     async updateAllCartItems(cid, productos){
         const cart = await this.getElementById(cid);
-        cart.products=productos;
+        const updateProducts = await Promise.all(productos.map(async (producto) => {
+            let productOnDB = await productManager.getElementById(producto.productId)
+            if (producto.quantity < productOnDB.stock){
+                productOnDB.stock-=producto.quantity;
+                productOnDB.save();
+                return producto;
+            } else {
+                console.log("Error por falta de stock")
+                return null;
+            }
+        }));
+        const productsOk = updateProducts.filter(p => p !== null);
+        console.log(productsOk);
+        cart.products = productsOk;
         cart.save();
-        return "Carrito Actualizado Completamente"
+        return "Carrito actualizado"
     }
 
     async updateCartItem(cid,pid,quantity){
         let product = await productManager.getElementById(pid)
         if (product.stock>quantity){
-            let cart=await this.getElementById(cid);
+            let cart = await this.getElementById(cid);
             cart.products.forEach(producto => {
                 if (producto.productId==pid){
                     producto.quantity=quantity;
@@ -104,7 +117,7 @@ export class cartManagerMongoDB extends ManagerMongoDB {
             cart.save();
             return "Cantidad de compra actualizada"
         }else{
-            return "No se puede agregar mas items que el stock disponible"
+            return "Error por falta de stock"
         }
 
     }
