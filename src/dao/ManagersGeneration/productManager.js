@@ -1,9 +1,9 @@
-import {getproductManagers } from "../daoManager.js";
+import { getManagerProducts }  from "../daoManager.js";
 
 
 
-const productData = await getproductManagers()
-const productManager = new productData.productManagerMongoDB();
+const data = await getManagerProducts();
+const managerProducts = new data.managerProductMongoDB();
 
 
-export default productManager;
+export default managerProducts;

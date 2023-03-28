@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getproductManagers } from "../dao/daoManager.js";
+import { getManagerProducts } from "../dao/daoManager.js";
 const rutasEnInicio = Router();
 import productManager from "../dao/ManagersGeneration/productManager.js";
 import cartManager from "../dao/ManagersGeneration/cartManager.js";
@@ -12,7 +12,7 @@ rutasEnInicio.get('/productsGet',async(req,res)=>{
 rutasEnInicio.get('/products', async (req, res) => {
 
   res.render("productsPaginate", {
-    titulo: "TP Final Santiago Basso",
+    titulo: "TP Caneda Franco",
   })
 
 })

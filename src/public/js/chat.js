@@ -26,7 +26,7 @@ botonChat.addEventListener("click", (e) => {
 })
 
 socket.on("allMessages", arrayMensajes => {
-    parrafosMensajes.innerHTML = "" //Limpio lo que serian los parrafos
+    parrafosMensajes.innerHTML = "" 
     arrayMensajes.forEach(mensaje => {
         parrafosMensajes.innerHTML += `<p><strong>${mensaje.nombre}</strong>(${mensaje.email}): ${mensaje.message} </p>`
     });
