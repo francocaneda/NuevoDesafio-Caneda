@@ -1,4 +1,6 @@
 import fs from "fs";
+//import { getproductManagers } from "../../daoManager.js";
+
 
 
 
@@ -59,7 +61,7 @@ export class ProductManager {
             if (tituloAuxiliar)
             {
                 
-                console.log(`El producto "${tituloAuxiliar.title}" ya está en la lista.`);
+                console.log(`El producto "${tituloAuxiliar.title}" ya está en la lista`);
             }
             else 
             {

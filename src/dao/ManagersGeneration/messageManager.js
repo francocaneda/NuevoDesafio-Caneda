@@ -1,9 +1,6 @@
-import { getManagerMessages } from "../daoManager.js";
+import { getmessageManagers } from "../daoManager.js";
 
-const data = await getManagerMessages();
-const managerMessages = new data.managerMessageMongoDB();
+const messageData = await getmessageManagers()
+const messageManager = new messageData.messageManagerMongoDB();
 
-//const data = await getManagerMessages()
-//const messageManagerma = new data.messageManagerMongoDB();
-
-export default managerMessages;
+export default messageManager;

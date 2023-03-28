@@ -1,9 +1,35 @@
 import { Router } from "express";
-import { destroySession, getSession, testLogin } from "../controllers/session.controller.js";
-
+import userManager from "../dao/ManagersGeneration/userManager.js";
+import { loginTest } from "../dao/ManagersGeneration/sessionManager.js";
 const routerSession = Router()
 
-routerSession.post("/testLogin",testLogin)
-routerSession.get("/logout", destroySession)
+
+
+
+routerSession.get('/login', async (req, res) => {
+    const {message} = req.body;
+    console.log(message)
+    res.render("login", {
+        titulo: "Caneda Franco",
+       
+    })
+})
+
+routerSession.post("/testLogin", async (req, res) => {
+    loginTest(req,res)
+})
+
+
+routerSession.get("/logout", (req, res) => {
+    if (req.session.login) {
+        req.session.destroy()
+    }
+    res.redirect(200,'/api/session/login', { 
+        'divMessage': "Hola"
+    })
+})
+
+
+
 
 export default routerSession

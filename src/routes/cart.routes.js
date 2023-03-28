@@ -67,7 +67,7 @@ routerCart.get("/:cid", async (req, res) => {
 
 
 routerCart.post("/:cid/products/:pid", async (req, res) => {
-   
+    //FALTA COMPROBAR QUE EL PRODUCTO EXISTA
     try{        
         res.send(await cartManager.addItemToCart(req.params.cid,req.params.pid));
     }catch{

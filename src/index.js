@@ -1,45 +1,34 @@
 import "dotenv/config"
 import express from "express";
 import { Server } from "socket.io";
-import { getManagerMessages, getManagerProducts} from "./dao/daoManager.js";
+import { getmessageManagers } from "./dao/daoManager.js";
 import { __dirname, __filename } from "./path.js";
-import rutasEnInicio from "./routes/rutasEnInicio.routes.js";
-import routerProduct from "./routes/products.routes.js";
-import routerCart from "./routes/cart.routes.js";
+import session from 'express-session'
+import multer from 'multer'
 import { engine } from 'express-handlebars';
 import * as path from 'path'
-import routerChat from "./routes/chat.routes.js";
-import routerProducto from './routes/products.routes.js'
-import routerUser from './routes/user.routes.js';
-import routerSession from './routes/session.routes.js';
-import MongoStore from 'connect-mongo';
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
+import MongoStore from 'connect-mongo'
+import cookieParser from 'cookie-parser'
+import router from "./routes/index.routes.js";
+
+
 
 const app = express()
-
 
 app.use(cookieParser(process.env.SIGNED_COOKIE))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(session({
     store: MongoStore.create({
-        mongoUrl: process.env.MONGODBURL,
+        mongoUrl: process.env.URLMONGODB,
         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-        ttl: 90
+        ttl: 200
     }),
     
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true
 }))
-
-app.engine("handlebars", engine())
-app.set("view engine", "handlebars")
-app.set("views", path.resolve(__dirname, "./views"))
-
-app.set("port", process.env.PORT || 5000)
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'src/public/img')
@@ -51,10 +40,39 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-//Routes
-app.use('/product', routerProducto)
-app.use('/user/', routerUser)
-app.use('/api/cart', routerCart)
-app.use('/api/session', routerSession)
+//Handlebars
+app.engine("handlebars", engine());
+app.set("view engine", "handlebars");
+app.set("views", path.resolve(__dirname, "./views"));
+
+//PORT
+app.set("port", process.env.PORT || 5000)
+
 const server = app.listen(app.get("port"), () => console.log(`Server on port ${app.get("port")}`))
 
+//Socket.io
+const io = new Server(server)
+//Messages
+const messageData = await getmessageManagers()
+const messageManager = new messageData.messageManagerMongoDB();
+
+
+
+
+
+io.on("connection", async (socket) => {
+    console.log("Cliente conectado")
+    socket.on("message", async (info) => {
+            messageManager.addElements([info]).then(() => {
+            messageManager.getElements().then((mensajes) => {
+                socket.emit("allMessages", mensajes)
+            })
+        })
+    })
+    messageManager.getElements().then((mensajes) => {
+        socket.emit("allMessages", mensajes)
+    })
+})
+
+//Routes
+app.use('/',router) 
