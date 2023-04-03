@@ -10,6 +10,8 @@ import * as path from 'path'
 import MongoStore from 'connect-mongo'
 import cookieParser from 'cookie-parser'
 import router from "./routes/index.routes.js";
+import initializePassport from './config/passport.js'
+import passport from 'passport'
 
 
 
@@ -45,6 +47,11 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", path.resolve(__dirname, "./views"));
 
+//Passport
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
+
 //PORT
 app.set("port", process.env.PORT || 5000)
 
@@ -52,6 +59,8 @@ const server = app.listen(app.get("port"), () => console.log(`Server on port ${a
 
 //Socket.io
 const io = new Server(server)
+
+
 //Messages
 const messageData = await getmessageManagers()
 const messageManager = new messageData.messageManagerMongoDB();

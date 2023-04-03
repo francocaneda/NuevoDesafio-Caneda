@@ -77,10 +77,10 @@ export class ManagerUserMongoDB extends ManagerMongoDB {
             if (validatePassword(password,usuario.password)){
                 return "Login exitoso"
             }else{
-                return "Login sin exito"
+                return "Login fallido"
             }
         }else{
-            return "No existe ese mail registrado"
+            return "No existe dicho mail registrado"
         }
     }
 }

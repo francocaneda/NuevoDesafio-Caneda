@@ -1,5 +1,7 @@
 import { Router } from "express";
 import userManager from "../dao/ManagersGeneration/userManager.js";
+import passport from "passport";
+
 const routerUser = Router()
 
 routerUser.post("/", async(req,res)=>{
@@ -10,6 +12,15 @@ routerUser.post("/", async(req,res)=>{
     }
     
     
+})
+
+routerUser.post("/register",passport.authenticate('register'), async(req,res)=>{
+    const mensaje = await userManager.createUser(req,res)
+    if(mensaje=="Usuario Agregado"){
+        res.redirect('auhtSession/github')
+    }else{
+        console.error(mensaje)
+    }
 })
 
 routerUser.get('/email/:email', async (req, res) => {

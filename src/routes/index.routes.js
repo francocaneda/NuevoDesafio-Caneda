@@ -4,11 +4,13 @@ import routerChat from "./chat.routes.js";
 import routerProduct from "./products.routes.js";
 import routerCart from "./cart.routes.js";
 import routerUser from "./user.routes.js";
+import routerGithub from "./github.routes.js";
 import express from "express";
 import { __dirname } from "../path.js";
 import { loginControl } from "../dao/ManagersGeneration/sessionManager.js";
 import cartManager from "../dao/ManagersGeneration/cartManager.js";
 import productManager from "../dao/ManagersGeneration/productManager.js";
+
 const router = Router();
 
 
@@ -19,6 +21,7 @@ router.use('/api/carts', loginControl, routerCart)
 router.use('/user', routerUser)
 router.use('/api/session/', routerSession)
 router.use('/', express.static(__dirname + '/public'))
+router.use('/authSession', routerGithub)
 
 //Rutas en inicio
 router.get('/products', loginControl, async (req, res) => {
