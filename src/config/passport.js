@@ -52,7 +52,7 @@ const initializePassport = () => {
                 return done(null, user)
             }
 
-            return done(null, false) //Contraseña no valida
+            return done(null, false) //Contraseña erronea
 
         } catch (error) {
             return done(error)
