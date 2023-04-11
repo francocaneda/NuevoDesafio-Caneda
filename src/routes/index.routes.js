@@ -27,9 +27,9 @@ router.use('/authSession', routerGithub)
 router.get('/products', loginControl, async (req, res) => {
     res.render("productsPaginate", {
         titulo: "Caneda Franco",
-        nombreUsuario: req.session.first_name,
+        nombreUsuario: req.session.user.email,
         apellidoUsuario: req.session.last_name,
-        role: req.session.role
+        role: req.session.user.role
     })
 
 })

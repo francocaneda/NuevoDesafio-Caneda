@@ -25,6 +25,9 @@ async function renderProducts() {
         } else if (sort != null && (sort == "asc" || sort == "desc")) {
             urlFetch += "&sort=" + sort
         }
+
+
+
         const response = await fetch(urlFetch);
         const products = await response.json();
         console.log(products)

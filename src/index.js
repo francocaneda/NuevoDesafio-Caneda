@@ -10,8 +10,8 @@ import * as path from 'path'
 import MongoStore from 'connect-mongo'
 import cookieParser from 'cookie-parser'
 import router from "./routes/index.routes.js";
-import initializePassport from './config/passport.js'
-import passport from 'passport'
+import initializePassport from './config/passport.js';
+import passport from 'passport';
 
 
 
@@ -51,6 +51,18 @@ app.set("views", path.resolve(__dirname, "./views"));
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
+
+passport.serializeUser((user, done) => {
+
+    done(null, user);
+    
+    });
+    
+passport.deserializeUser((obj, done) => {
+    
+    done(null, obj);
+    
+    });
 
 //PORT
 app.set("port", process.env.PORT || 5000)

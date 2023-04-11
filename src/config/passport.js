@@ -64,7 +64,13 @@ const initializePassport = () => {
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
         callbackURL: 'http://localhost:5000/authSession/githubSession'
-    }, async(accesToken, refreshToken, profile, done) => {
+    }, (accessToken, refreshToken, profile, done) => {
+        const user = {email: profile.username, role: "user"};
+        console.log(profile);
+        return done(null, user);
+    }
+    
+    /*async(accesToken, refreshToken, profile, done) => {
 
         try {
             console.log(profile)
@@ -78,7 +84,7 @@ const initializePassport = () => {
                     first_name: profile._json.name,
                     last_name: ' ',
                     email: profile._json.email,
-                    password: passwordHash //Contraseña por default
+                    password: passwordHash 
                 }])
 
                 done(null, userCreated)
@@ -86,8 +92,9 @@ const initializePassport = () => {
         } catch (error) {
             return done(error)
         }
-    }))
+    }*/))
     
+
 
 
     //Iniciar la session del usuario
